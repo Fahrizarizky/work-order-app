@@ -11,7 +11,7 @@ class WorkOrderController extends Controller
 {
     public function getWorkOrder() {
         //work order untuk di tampilkan kepada manajer production
-        $workorders = WorkOrder::latest()->get();
+        $workorders = WorkOrder::with('user')->latest()->get();
 
         //work order untuk di tampilkan kepada operator yang di tugaskan
         $workordersoperator = WorkOrder::where('user_id', Auth::user()->id)->latest()->get();
@@ -81,7 +81,7 @@ class WorkOrderController extends Controller
     }
 
     public function showWorkOrder($id) {
-        $workorder = WorkOrder::find($id);
+        $workorder = WorkOrder::with('user')->find($id);
         return view('dashboard.wo-manager.show', compact('workorder'));
     }
 
